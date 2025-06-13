@@ -1,29 +1,32 @@
+import block.{Stone, Wood}
 import munit.FunSuite
+import tool.{Axe, Pickaxe, Tool}
+import world.Chunk
 
 class ToolTest extends FunSuite {
-  var axe: tool.Axe = _
-  var pickaxe: tool.Pickaxe = _
-  var chunk: world.Chunk = _
+  var axe: Axe = _
+  var pickaxe: Pickaxe = _
+  var chunk: Chunk = _
 
   override def beforeEach(context: BeforeEach): Unit = {
-    axe = new tool.Axe()
-    pickaxe = new tool.Pickaxe()
-    chunk = new world.Chunk()
+    axe = new Axe()
+    pickaxe = new Pickaxe()
+    chunk = new Chunk()
   }
 
   test("Axe is a tool") {
-    assert(axe.isInstanceOf[tool.ATool])
+    assert(axe.isInstanceOf[Tool])
     assertEquals(axe.name, "Axe")
   }
 
   test("Pickaxe is a tool") {
-    assert(pickaxe.isInstanceOf[tool.ATool])
+    assert(pickaxe.isInstanceOf[Tool])
     assertEquals(pickaxe.name, "Pickaxe")
   }
 
   test("Axe can remove wood") {
-    val wood = new block.Wood()
-    val stone = new block.Stone()
+    val wood = new Wood()
+    val stone = new Stone()
     chunk.addBlock(wood)
     chunk.addBlock(stone)
     chunk.getMinedWithVisitor(axe)
@@ -32,8 +35,8 @@ class ToolTest extends FunSuite {
   }
 
   test("Pickaxe can remove stone") {
-    val stone = new block.Stone()
-    val wood = new block.Wood()
+    val stone = new Stone()
+    val wood = new Wood()
     chunk.addBlock(stone)
     chunk.addBlock(wood)
     chunk.getMinedWithVisitor(pickaxe)

@@ -1,26 +1,29 @@
+import block.{Stone, Wood}
 import munit.FunSuite
+import tool.{Axe, Pickaxe}
+import world.{Chunk, Player}
 
 class WorldTest extends FunSuite {
-  var player: world.Player = _
-  var chunk: world.Chunk = _
+  var player: Player = _
+  var chunk: Chunk = _
 
   override def beforeEach(context: BeforeEach): Unit = {
-    player = new world.Player()
-    chunk = new world.Chunk()
-    chunk.addBlock(new block.Stone())
-    chunk.addBlock(new block.Wood())
+    player = new Player()
+    chunk = new Chunk()
+    chunk.addBlock(new Stone())
+    chunk.addBlock(new Wood())
   }
 
   test("A block can be added to a chunk") {
     assertEquals(chunk.blocks.length, 3)
-    val b = new block.Stone()
+    val b = new Stone()
     chunk.addBlock(b)
     assertEquals(chunk.blocks.length, 4)
   }
 
   test("A block can be removed from a chunk") {
     assertEquals(chunk.blocks.length, 3)
-    val b = new block.Stone()
+    val b = new Stone()
     chunk.addBlock(b)
     assertEquals(chunk.blocks.length, 4)
     chunk.removeBlock(b)
@@ -28,13 +31,13 @@ class WorldTest extends FunSuite {
   }
 
   test("Player can mine with a Pickaxe") {
-    val pickaxe = new tool.Pickaxe()
+    val pickaxe = new Pickaxe()
     player.mine(pickaxe, chunk)
     assertEquals(pickaxe.obtainBlocks().length, 1)
   }
 
   test("Player can mine with a Axe") {
-    val axe = new tool.Axe()
+    val axe = new Axe()
     player.mine(axe, chunk)
     assertEquals(axe.obtainBlocks().length, 1)
   }
